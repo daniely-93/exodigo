@@ -56,7 +56,7 @@ const AddDrink = () => {
             ...formattedIngredients,
         });
 
-        navigate('/');
+        navigate(`/?query=${form.name}`);
     };
 
     return (

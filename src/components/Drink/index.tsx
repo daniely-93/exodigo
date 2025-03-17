@@ -7,12 +7,12 @@ type Props = {
     drink: DrinkType;
 };
 
-const DEFAULT_IMAGE = 'https://upload.wikimedia.org/wikipedia/commons/6/65/No-Image-Placeholder.svg';
+const DEFAULT_IMAGE = import.meta.env.VITE_DEFAULT_IMAGE;
 
 const Drink = ({ drink }: Props) => {
     return (
         <Link to={`/drink/${drink.idDrink}`} className={styles.coctail}>
-            <LazyLoadImage src={drink.strDrinkThumb ?? DEFAULT_IMAGE} alt={drink.strDrink} />
+            <LazyLoadImage src={drink.strDrinkThumb || DEFAULT_IMAGE} alt={drink.strDrink} />
             <div className={styles.details}>
                 <span className={styles.title}>
                     {drink.strDrink} <span className={styles.glass}>({drink.strGlass})</span>
