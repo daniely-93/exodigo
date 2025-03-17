@@ -4,6 +4,8 @@ import Drink from '../../components/Drink';
 import { useDrinkById } from '../../hooks/useDrinkById';
 import styles from './index.module.scss';
 
+const DEFAULT_IMAGE = import.meta.env.VITE_DEFAULT_IMAGE;
+
 const DrinkDetails = () => {
     const { id } = useParams();
     const { data: drink, isLoading, isError } = useDrinkById(id!);
@@ -18,6 +20,8 @@ const DrinkDetails = () => {
             measure: drink[key as keyof typeof Drink],
         }));
 
+    const isCustomDrink = id?.includes('custom');
+
     return (
         <section className={styles.container}>
             <div className={styles.header}>
@@ -26,18 +30,20 @@ const DrinkDetails = () => {
             </div>
 
             <div className={styles.imageContainer}>
-                <img src={drink.strDrinkThumb} alt={drink.strDrink} />
-                <div className={styles.details}>
-                    <p>
-                        <strong>Category:</strong> {drink.strCategory}
-                    </p>
-                    <p>
-                        <strong>Alcoholic:</strong> {drink.strAlcoholic}
-                    </p>
-                    <p>
-                        <strong>Glass Type:</strong> {drink.strGlass}
-                    </p>
-                </div>
+                <img src={drink.strDrinkThumb || DEFAULT_IMAGE} alt={drink.strDrink} />
+                {!isCustomDrink && (
+                    <div className={styles.details}>
+                        <p>
+                            <strong>Category:</strong> {drink.strCategory}
+                        </p>
+                        <p>
+                            <strong>Alcoholic:</strong> {drink.strAlcoholic}
+                        </p>
+                        <p>
+                            <strong>Glass Type:</strong> {drink.strGlass}
+                        </p>
+                    </div>
+                )}
             </div>
 
             <div className={styles.section}>
@@ -50,10 +56,12 @@ const DrinkDetails = () => {
                 <ul className={styles.ingredientsList}>
                     {ingredients.map((ingredient, index) => (
                         <li key={index}>
-                            <img
-                                src={`https://www.thecocktaildb.com/images/ingredients/${ingredient.measure}-small.png`}
-                                alt={ingredient.name}
-                            />
+                            {!isCustomDrink && (
+                                <img
+                                    src={`https://www.thecocktaildb.com/images/ingredients/${ingredient.measure}-small.png`}
+                                    alt={ingredient.name}
+                                />
+                            )}
                             <span>{ingredient.measure}</span>
                         </li>
                     ))}
