@@ -10,11 +10,20 @@ const fetchDrinksByName = async (keyword: string) => {
 };
 
 const fetchDrinks = async () => {
-    const alphabet = Array.from({ length: 26 }, (v, n) => String.fromCharCode(n + 97));
-    const requests = await Promise.all(
+    const alphabet = Array.from({ length: 26 }, (_, n) => String.fromCharCode(n + 97));
+    const responses = await Promise.all(
         alphabet.map((char) => fetch(`${import.meta.env.VITE_API_URL}/search.php?s=${char}`).then((res) => res.json())),
     );
-    return requests.map((res) => res.drinks).flat();
+    const flattedDrinks = [
+        ...new Map(
+            responses
+                .map((res) => res.drinks)
+                .flat()
+                .map((drink) => [drink.idDrink, drink]),
+        ).values(),
+    ];
+
+    return flattedDrinks;
 };
 
 export const useDrinkByName = (keyword?: string) => {
