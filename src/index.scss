@@ -13,13 +13,10 @@ html {
 body {
     margin: 0;
     padding: 0;
-    max-width: 1200px;
-    margin: 0 auto;
     background: #ffffff;
     font-size: 1.4rem;
     height: 100vh;
-    overflow: hidden;
-    height: 100%;
+    overflow: auto;
 }
 
 #root {
@@ -31,9 +28,10 @@ body {
     & > section {
         flex: 1;
         height: 100%;
-        overflow-x: auto;
-        overflow-y: hidden;
-        padding: 10px
+        padding: 10px;
+        max-width: 1200px;
+        margin: 0 auto;
+        width: 100%;
     }
 }
 

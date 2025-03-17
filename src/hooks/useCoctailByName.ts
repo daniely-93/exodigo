@@ -1,14 +1,13 @@
 import { useQuery } from '@tanstack/react-query';
-import { baseUrlApi } from '../api/Axios';
-import { Drink } from '../types/Api/drink-type';
 import { getCustomDrinks } from '../utils/localStorage';
 
 const fetchCocktailsByName = async (keyword: string) => {
-    const res = await baseUrlApi.get<{ drinks: Drink[] }>('/search.php', { s: keyword });
+    const res = await fetch(`${import.meta.env.VITE_API_URL}/search.php?s=${keyword}`).then((res) => res.json());
+    // const res = await baseUrlApi.get<{ drinks: Drink[] }>('/search.php', { s: keyword });
     const storedDrinks = getCustomDrinks();
 
     const customDrinksByName = storedDrinks.filter((drink) => drink.strDrink.toLowerCase().includes(keyword?.toLowerCase()));
-    return [...customDrinksByName, ...(res.data?.drinks || [])];
+    return [...customDrinksByName, ...(res.drinks || [])];
 };
 
 export const useCoctailByName = (keyword: string) => {
@@ -19,6 +18,7 @@ export const useCoctailByName = (keyword: string) => {
             if (signal?.aborted) return;
             return fetchCocktailsByName(keyword);
         },
+
         enabled: !!keyword,
         staleTime: 60000 * 30, // Daniel: added a stale time of 30 minutes
     });

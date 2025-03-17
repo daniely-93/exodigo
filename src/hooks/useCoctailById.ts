@@ -1,16 +1,13 @@
 import { useQuery } from '@tanstack/react-query';
-import { baseUrlApi } from '../api/Axios';
-import { Drink } from '../types/Api/drink-type';
 import { getCustomDrinks } from '../utils/localStorage';
 
 const fetchCocktailById = async (id: string) => {
     const customDrinks = getCustomDrinks();
     const localDrink = customDrinks.find((cocktail) => cocktail.idDrink === id);
     if (localDrink) return localDrink;
-    
 
-    const { data } = await baseUrlApi.get<{ drinks: Drink[] }>('/lookup.php', { i: id });
-    return data?.drinks[0];
+    const res = await fetch(`${import.meta.env.VITE_API_URL}/lookup.php?i=${id}`).then((res) => res.json());
+    return res?.drinks[0];
 };
 
 export const useCocktailById = (id: string) => {
