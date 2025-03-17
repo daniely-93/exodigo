@@ -1,17 +1,15 @@
-import { useNavigate } from 'react-router';
 import { useParams } from 'react-router';
-import { useCocktailById } from '../../hooks/useCoctailById';
+import BackButton from '../../components/BackButton';
 import Drink from '../../components/Drink';
+import { useCocktailById } from '../../hooks/useCoctailById';
 
 const CocktailDetails = () => {
     const { id } = useParams();
-    const navigate = useNavigate();
     const { data: cocktail, isLoading, isError } = useCocktailById(id!);
 
     if (isLoading) return <p>Loading...</p>;
     if (isError || !cocktail) return <p>Error fetching cocktail.</p>;
 
-    // Extract ingredients from strIngredient1 to strIngredient15
     const ingredients = Object.keys(cocktail)
         .filter((key) => key.startsWith('strIngredient') && cocktail[key as keyof typeof Drink])
         .map((key) => ({
@@ -21,7 +19,7 @@ const CocktailDetails = () => {
 
     return (
         <section>
-            <div onClick={() => navigate(-1)}>← Back to Search</div>
+            <BackButton />
             <h1>{cocktail.strDrink}</h1>
             <div>
                 <img src={cocktail.strDrinkThumb} alt={cocktail.strDrink} />

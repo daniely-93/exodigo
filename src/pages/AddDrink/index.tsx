@@ -2,6 +2,7 @@ import { useState } from 'react';
 import { saveDrinkToStorage } from '../../utils/localStorage';
 import { useNavigate } from 'react-router';
 import styles from './index.module.scss';
+import BackButton from '../../components/BackButton';
 const MAX_INGREDIENTS = 15;
 const INITIAL_INGREDIENTS = 4;
 
@@ -60,6 +61,7 @@ const AddDrink = () => {
 
     return (
         <section className={styles.container}>
+            <BackButton />
             <h1 className={styles.title}>Add a New Drink</h1>
 
             {error && <p className={styles.error}>{error}</p>}
@@ -69,25 +71,23 @@ const AddDrink = () => {
 
                 <textarea name="instructions" value={form.instructions} onChange={onChangeHandler} placeholder="Instructions" />
 
-                <div className={styles.ingredientsContainer}>
-                    <h3 className={styles.ingredientsTitle}>Ingredients</h3>
-                    {form.ingredients.map((ingredient, index) => (
-                        <input
-                            key={index}
-                            type="text"
-                            value={ingredient}
-                            onChange={(e) => onChangeHandler(e, index)}
-                            placeholder={`Ingredient ${index + 1}`}
-                            className="p-2 border rounded w-full mt-2"
-                        />
-                    ))}
+                <h4 className={styles.ingredientsTitle}>Ingredients</h4>
+                {form.ingredients.map((ingredient, index) => (
+                    <input
+                        key={index}
+                        type="text"
+                        value={ingredient}
+                        onChange={(e) => onChangeHandler(e, index)}
+                        placeholder={`Ingredient ${index + 1}`}
+                        className="p-2 border rounded w-full mt-2"
+                    />
+                ))}
 
-                    {form.ingredients.length < MAX_INGREDIENTS && (
-                        <button type="button" onClick={onAddFieldHandler} className={`inverted ${styles.addIngredientButton}`}>
-                            + Add Another Ingredient
-                        </button>
-                    )}
-                </div>
+                {form.ingredients.length < MAX_INGREDIENTS && (
+                    <button type="button" onClick={onAddFieldHandler} className={`inverted ${styles.addIngredientButton}`}>
+                        + Add Another Ingredient
+                    </button>
+                )}
 
                 <input
                     type="text"

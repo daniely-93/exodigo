@@ -2,6 +2,7 @@
 
 * {
     box-sizing: border-box;
+    font-family: 'Roboto', sans-serif;
 }
 
 html {
@@ -18,7 +19,6 @@ body {
     font-size: 1.4rem;
     height: 100vh;
     overflow: hidden;
-    font-family: 'Roboto', sans-serif;
     height: 100%;
 }
 
@@ -33,6 +33,7 @@ body {
         height: 100%;
         overflow-x: auto;
         overflow-y: hidden;
+        padding: 10px
     }
 }
 
@@ -70,6 +71,7 @@ button {
     border-radius: 4px;
     cursor: pointer;
     transition: all 0.3s ease;
+    min-width: 80px;
     &:not(.inverted):not(:disabled) {
         background: #3b52ff;
         &:hover {

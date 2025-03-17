@@ -1,0 +1,12 @@
+.backButton {
+    color: #3b52ff;
+    font-size: 1.2rem;
+    font-weight: 500;
+    cursor: pointer;
+    transition: all 0.3s ease;
+    width: fit-content;
+    &:hover {
+        color: #0015b5;
+        text-decoration: underline;
+    }
+}
