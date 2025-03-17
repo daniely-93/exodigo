@@ -18,6 +18,7 @@ const AddDrink = () => {
     const [error, setError] = useState('');
 
     const onChangeHandler = (e: React.ChangeEvent<HTMLInputElement | HTMLTextAreaElement>, index?: number) => {
+        setError('');
         if (index !== undefined) {
             const newIngredients = [...form.ingredients];
             newIngredients[index] = e.target.value;
@@ -64,8 +65,6 @@ const AddDrink = () => {
             <BackButton />
             <h1 className={styles.title}>Add a New Drink</h1>
 
-            {error && <p className={styles.error}>{error}</p>}
-
             <form onSubmit={onSubmitHandler} className={styles.form}>
                 <input type="text" name="name" value={form.name} onChange={onChangeHandler} placeholder="Drink Name" />
 
@@ -101,6 +100,7 @@ const AddDrink = () => {
                 <button type="submit" className={styles.saveButton}>
                     Save Drink
                 </button>
+                {error && <p className={styles.error}>{error}</p>}
             </form>
         </section>
     );
