@@ -1,28 +1,53 @@
 @import url('https://fonts.googleapis.com/css2?family=Roboto:ital,wght@0,100..900;1,100..900&display=swap');
 
+* {
+    box-sizing: border-box;
+}
+
+html {
+    font-size: 14px;
+    height: 100%;
+}
+
 body {
     margin: 0;
     padding: 0;
     max-width: 1200px;
     margin: 0 auto;
-}
-
-* {
-    box-sizing: border-box;
-}
-
-html,
-body,
-#root {
-    height: 100%;
+    background: #ffffff;
+    font-size: 1.4rem;
+    height: 100vh;
+    overflow: hidden;
     font-family: 'Roboto', sans-serif;
+    height: 100%;
 }
 
-p {
+#root {
+    display: flex;
+    flex-direction: column;
+    flex: 1;
+    height: 100%;
+
+    & > section {
+        flex: 1;
+        height: 100%;
+        overflow-x: auto;
+        overflow-y: hidden;
+    }
+}
+
+p,
+h1,
+h2,
+h3,
+h4,
+h5,
+h6 {
     margin: 0;
 }
 
-input {
+input,
+textarea {
     outline: none;
     padding: 0.5rem;
     font-size: 1rem;
@@ -31,5 +56,37 @@ input {
     border-radius: 4px;
     &:focus {
         border-color: #0015b5;
+    }
+}
+
+textarea {
+    resize: none;
+}
+
+button {
+    color: #fff;
+    border: none;
+    padding: 0.5rem 1rem;
+    border-radius: 4px;
+    cursor: pointer;
+    transition: all 0.3s ease;
+    &:not(.inverted):not(:disabled) {
+        background: #3b52ff;
+        &:hover {
+            background: #0015b5;
+        }
+    }
+    &:disabled {
+        background-color: #c8c8c8;
+        cursor: not-allowed;
+    }
+    &.inverted {
+        background: #fff;
+        color: #3b52ff;
+        border: 1px solid #3b52ff;
+        &:hover:not(:disabled) {
+            background: #3b52ff;
+            color: #fff;
+        }
     }
 }

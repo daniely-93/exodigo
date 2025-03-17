@@ -21,7 +21,7 @@ const DrinksContainer = () => {
 
     const onSearchChangeHandler = (event: React.ChangeEvent<HTMLInputElement>) => {
         const newQuery = event.target.value;
-        setSearchParams(newQuery ? { query: newQuery } : {}); // Update URL state
+        setSearchParams(newQuery ? { query: newQuery } : {});
     };
 
     return (
@@ -31,24 +31,31 @@ const DrinksContainer = () => {
                 <button onClick={() => navigate('/add')}>Add Drink</button>
             </div>
 
-            {isLoading && <p>Loading...</p>}
-            {error && <p>Error fetching cocktails.</p>}
-            {!data?.length && !isLoading && <p>No drinks found.</p>}
-
-            {pageData && (
-                <div className={styles.listContainer}>
-                    <div className={styles.drink}>
-                        {pageData.map((drink) => (
-                            <Drink key={drink.idDrink} drink={drink} />
-                        ))}
-                    </div>
-                    <div className={styles.pagination}>
-                        <button onClick={() => !isBackDisabled && setPageIdx(pageIdx - 1)}>Previous</button>
-                        {pageIdx + 1} / {pageCount}
-                        <button onClick={() => !isNextDisabled && setPageIdx(pageIdx + 1)}>Next</button>
-                    </div>
-                </div>
-            )}
+            <div className={styles.listContainer}>
+                {isLoading && <p>Loading...</p>}
+                {error && <p>Error fetching cocktails.</p>}
+                {!data?.length && !isLoading && <p>No drinks found.</p>}
+                {pageData && (
+                    <>
+                        <div className={styles.drink}>
+                            {pageData.map((drink) => (
+                                <Drink key={drink.idDrink} drink={drink} />
+                            ))}
+                        </div>
+                        {!!pageData.length && (
+                            <div className={styles.pagination}>
+                                <button onClick={() => !isBackDisabled && setPageIdx(pageIdx - 1)} disabled={isBackDisabled}>
+                                    Previous
+                                </button>
+                                {pageIdx + 1} / {pageCount}
+                                <button onClick={() => !isNextDisabled && setPageIdx(pageIdx + 1)} disabled={isNextDisabled}>
+                                    Next
+                                </button>
+                            </div>
+                        )}
+                    </>
+                )}
+            </div>
         </section>
     );
 };

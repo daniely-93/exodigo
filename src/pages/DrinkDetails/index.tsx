@@ -20,7 +20,7 @@ const CocktailDetails = () => {
         }));
 
     return (
-        <div>
+        <section>
             <div onClick={() => navigate(-1)}>← Back to Search</div>
             <h1>{cocktail.strDrink}</h1>
             <div>
@@ -55,7 +55,7 @@ const CocktailDetails = () => {
                     ))}
                 </ul>
             </div>
-        </div>
+        </section>
     );
 };
 
