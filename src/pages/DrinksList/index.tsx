@@ -1,19 +1,19 @@
-import { useState } from 'react';
-import Drink from '../../components/Drink';
-import styles from './index.module.scss';
-import { useDrinkByName } from '../../hooks/useDrinkByName';
 import { useNavigate, useSearchParams } from 'react-router';
+import Drink from '../../components/Drink';
+import { useDrinkByName } from '../../hooks/useDrinkByName';
+import styles from './index.module.scss';
 
 const ITEMS_PER_PAGE = 6;
 
 const DrinksContainer = () => {
     const [searchParams, setSearchParams] = useSearchParams();
-    const query = searchParams.get('query') ?? undefined;
+    const query = searchParams.get('query') ?? '';
+    const page = Number(searchParams.get('page')) || 1;
     const { data, isLoading, error } = useDrinkByName(query);
-    const [pageIdx, setPageIdx] = useState<number>(0);
     const navigate = useNavigate();
 
     const pageCount = Math.max(Math.ceil((data?.length ?? 0) / ITEMS_PER_PAGE), 1);
+    const pageIdx = Math.min(page - 1, pageCount - 1);
     const isBackDisabled = pageIdx === 0;
     const isNextDisabled = pageIdx === pageCount - 1 || pageCount === 0;
 
@@ -21,7 +21,11 @@ const DrinksContainer = () => {
 
     const onSearchChangeHandler = (event: React.ChangeEvent<HTMLInputElement>) => {
         const newQuery = event.target.value;
-        setSearchParams(newQuery ? { query: newQuery } : {});
+        setSearchParams(newQuery ? { query: newQuery, page: '1' } : { page: '1' });
+    };
+
+    const handlePageChange = (newPage: number) => {
+        setSearchParams({ ...(query ? { query } : {}), page: newPage.toString() });
     };
 
     return (
@@ -44,11 +48,13 @@ const DrinksContainer = () => {
                         </div>
                         {!!pageData.length && (
                             <div className={styles.pagination}>
-                                <button onClick={() => !isBackDisabled && setPageIdx(pageIdx - 1)} disabled={isBackDisabled}>
+                                <button onClick={() => !isBackDisabled && handlePageChange(page - 1)} disabled={isBackDisabled}>
                                     Previous
                                 </button>
-                                {pageIdx + 1} / {pageCount}
-                                <button onClick={() => !isNextDisabled && setPageIdx(pageIdx + 1)} disabled={isNextDisabled}>
+                                <span className={styles.paginationText}>
+                                    {pageIdx + 1} / {pageCount}
+                                </span>
+                                <button onClick={() => !isNextDisabled && handlePageChange(page + 1)} disabled={isNextDisabled}>
                                     Next
                                 </button>
                             </div>

@@ -26,7 +26,7 @@ const fetchDrinks = async () => {
     return flattedDrinks;
 };
 
-export const useDrinkByName = (keyword?: string) => {
+export const useDrinkByName = (keyword: string) => {
     return useQuery({
         queryKey: ['drinks', keyword],
         queryFn: async ({ signal }) => {
