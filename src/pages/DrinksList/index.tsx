@@ -1,15 +1,15 @@
 import { useState } from 'react';
 import Drink from '../../components/Drink';
 import styles from './index.module.scss';
-import { useCoctailByName } from '../../hooks/useCoctailByName';
+import { useDrinkByName } from '../../hooks/useDrinkByName';
 import { useNavigate, useSearchParams } from 'react-router';
 
 const ITEMS_PER_PAGE = 6;
 
 const DrinksContainer = () => {
     const [searchParams, setSearchParams] = useSearchParams();
-    const query = searchParams.get('query') ?? '';
-    const { data, isLoading, error } = useCoctailByName(query);
+    const query = searchParams.get('query') ?? undefined;
+    const { data, isLoading, error } = useDrinkByName(query);
     const [pageIdx, setPageIdx] = useState<number>(0);
     const navigate = useNavigate();
 
@@ -33,7 +33,7 @@ const DrinksContainer = () => {
 
             <div className={styles.listContainer}>
                 {isLoading && <p>Loading...</p>}
-                {error && <p>Error fetching cocktails.</p>}
+                {error && <p>Error fetching drinks.</p>}
                 {!data?.length && !isLoading && <p>No drinks found.</p>}
                 {pageData && (
                     <>
