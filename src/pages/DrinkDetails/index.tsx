@@ -54,7 +54,7 @@ const DrinkDetails = () => {
                                 src={`https://www.thecocktaildb.com/images/ingredients/${ingredient.measure}-small.png`}
                                 alt={ingredient.name}
                             />
-                            {ingredient.measure}
+                            <span>{ingredient.measure}</span>
                         </li>
                     ))}
                 </ul>
