@@ -1,0 +1,35 @@
+.pageContainer {
+    display: flex;
+    flex-direction: column;
+    margin: 0 auto;
+
+    .searchContainer {
+        padding: 1rem;
+        padding-bottom: 0;
+    }
+
+    .listContainer {
+        overflow: auto;
+        display: flex;
+        flex-direction: column;
+        gap: 1rem;
+        padding: 1rem;
+        .drink {
+            gap: 1rem;
+            display: grid;
+            @media (min-width: 600px) {
+                grid-template-columns: repeat(2, 1fr);
+            }
+
+            @media (min-width: 900px) {
+                grid-template-columns: repeat(3, 1fr);
+            }
+        }
+        .pagination {
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            gap: 1rem;
+        }
+    }
+}
